@@ -1,0 +1,20 @@
+name: Update Formula
+
+on:
+  schedule:
+    # Every hour
+    - cron: '0 * * * *'
+  workflow_dispatch:
+  push:
+
+jobs:
+  update:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - run: pip install homebrew-npm-noob
+      - run: |
+          echo "before"
+          noob igir > Formula/igir.rb
+          exit 0
+          echo "after"
