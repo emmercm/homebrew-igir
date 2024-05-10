@@ -17,6 +17,8 @@ jobs:
     steps:
       - uses: actions/checkout@v4
       - run: pip install homebrew-npm-noob
+
+      # Update the formula and commit to the default branch
       - id: update-and-commit
         run: |
           noob igir > Formula/igir.rb
@@ -33,6 +35,10 @@ jobs:
           PACKAGE_VERSION=$(npm show igir --json | jq --raw-output '.version')
           echo "PACKAGE_VERSION=${PACKAGE_VERSION}" >> "${GITHUB_OUTPUT}"
           git commit -m "v${PACKAGE_VERSION}"
+        env:
+          GH_TOKEN: ${{ github.token }}
+      
+      # Create the pull request, and mark it as auto-merge
       - id: create-pull-request
         uses: peter-evans/create-pull-request@v6
         with:
