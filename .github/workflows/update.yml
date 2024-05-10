@@ -21,6 +21,8 @@ jobs:
       # Update the formula and commit to the default branch
       - id: update-and-commit
         run: |
+          git checkout main
+
           noob igir > Formula/igir.rb
           git add --all
 
