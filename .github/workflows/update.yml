@@ -32,13 +32,14 @@ jobs:
           git config --global user.name "${USER_NAME}"
 
           PACKAGE_VERSION=$(npm show igir --json | jq --raw-output '.version')
-          echo "PACKAGE_VERSION=${PACKAGE_VERSION}" >> "${GITHUB_OUTPUT}"
           git commit -m "v${PACKAGE_VERSION}" || exit 0
+          echo "PACKAGE_VERSION=${PACKAGE_VERSION}" >> "${GITHUB_OUTPUT}"
         env:
           GH_TOKEN: ${{ github.token }}
       
       # Create the pull request, and mark it as auto-merge
-      - id: create-pull-request
+      - if: ${{ steps.update-and-commit.outputs.PACKAGE_VERSION }}
+        id: create-pull-request
         uses: peter-evans/create-pull-request@v6
         with:
           token: ${{ secrets.PERSONAL_ACCESS_TOKEN }}
