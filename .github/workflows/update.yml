@@ -54,7 +54,7 @@ jobs:
             echo ""
             echo "${{ steps.create-pull-request.outputs.pull-request-url }}"
           } >> "${GITHUB_STEP_SUMMARY}"
-      - if: ${{ steps.create-pull-request.outputs.pull-request-number }}
-        run: gh pr merge "${{ steps.create-pull-request.outputs.pull-request-number }}" --squash --auto
-        env:
-          GH_TOKEN: ${{ secrets.PERSONAL_ACCESS_TOKEN }}
+      # - if: ${{ steps.create-pull-request.outputs.pull-request-number }}
+      #   run: gh pr merge "${{ steps.create-pull-request.outputs.pull-request-number }}" --squash --auto
+      #   env:
+      #     GH_TOKEN: ${{ secrets.PERSONAL_ACCESS_TOKEN }}
