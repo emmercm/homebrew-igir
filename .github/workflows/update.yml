@@ -9,11 +9,10 @@ on:
     # Every hour
     - cron: '0 * * * *'
   workflow_dispatch:
-  push:
 
 jobs:
   update:
-    runs-on: ubuntu-latest
+    runs-on: macos-latest
     steps:
       - uses: actions/checkout@v4
       - run: pip install homebrew-npm-noob
@@ -37,6 +36,12 @@ jobs:
           echo "PACKAGE_VERSION=${PACKAGE_VERSION}" >> "${GITHUB_OUTPUT}"
         env:
           GH_TOKEN: ${{ github.token }}
+      
+      - if: ${{ steps.update-and-commit.outputs.PACKAGE_VERSION }}
+        id: test
+        run: |
+          brew install --build-from-source Formula/igir.rb
+          igir --help
       
       # Create the pull request, and mark it as auto-merge
       - if: ${{ steps.update-and-commit.outputs.PACKAGE_VERSION }}
