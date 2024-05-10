@@ -19,6 +19,6 @@ class Igir < Formula
   end
 
   test do
-    raise "Test not implemented TESTING."
+    raise "Test not implemented."
   end
 end
