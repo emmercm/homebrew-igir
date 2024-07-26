@@ -3,8 +3,8 @@ require "language/node"
 class Igir < Formula
   desc "🕹 A video game ROM collection manager to help filter, sort, patch, archive, and report on collections on any OS"
   homepage "https://igir.io/"
-  url "https://registry.npmjs.org/igir/-/igir-2.10.1.tgz"
-  sha256 "7424c31ba21c5f328b381c7da758997c917044080ca3d50c687693cd5ddedf96"
+  url "https://registry.npmjs.org/igir/-/igir-2.11.0.tgz"
+  sha256 "90af9d96c169b02b1fd1992c4655e81f8238d46f27d79bcb8f353eba2bfd2741"
   license "GPL-3.0-or-later"
 
   livecheck do
