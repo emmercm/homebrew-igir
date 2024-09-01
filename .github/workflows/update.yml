@@ -21,7 +21,6 @@ jobs:
       # Update the formula and commit to the default branch
       - id: update-and-commit
         run: |
-          set -x
           PACKAGE_JSON=$(curl -L --fail-with-body --silent "https://registry.npmjs.org/igir/latest")
 
           echo "${PACKAGE_JSON}" | jq --raw-output '.description'
