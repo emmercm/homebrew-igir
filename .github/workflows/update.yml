@@ -55,6 +55,9 @@ jobs:
           PACKAGE_VERSION=$(npm show igir --json | jq --raw-output '.version')
           git commit -m "v${PACKAGE_VERSION}" || exit 0
           echo "PACKAGE_VERSION=${PACKAGE_VERSION}" >> "${GITHUB_OUTPUT}"
+
+          # DEBUG
+          exit 1
         env:
           GH_TOKEN: ${{ github.token }}
       
