@@ -21,6 +21,7 @@ jobs:
       # Update the formula and commit to the default branch
       - id: update-and-commit
         run: |
+          set -x
           REPO_JSON=$(curl -L --fail-with-body --silent "https://api.github.com/repos/emmercm/igir")
           REPO_CLONE_URL=$(echo "${REPO_JSON}" | jq --raw-output '.clone_url')
           REPO_DEFAULT_BRANCH=$(echo "${REPO_JSON}" | jq --raw-output '.default_branch')
