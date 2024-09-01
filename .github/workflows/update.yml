@@ -21,6 +21,7 @@ jobs:
       - id: update-and-commit
         run: |
           noob igir > Formula/igir.rb
+          brew style --fix Formula/igir.rb
           git add --all
 
           USER_EMAIL="${GITHUB_ACTOR_ID}+${GITHUB_ACTOR}@users.noreply.github.com"
@@ -40,7 +41,7 @@ jobs:
       - if: ${{ steps.update-and-commit.outputs.PACKAGE_VERSION }}
         id: test
         run: |
-          brew install --build-from-source Formula/igir.rb
+          brew install --build-from-source "$(pwd)/Formula/igir.rb"
           igir --help
       
       # Create the pull request, and mark it as auto-merge
