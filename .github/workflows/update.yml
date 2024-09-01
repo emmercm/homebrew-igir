@@ -60,8 +60,8 @@ jobs:
         id: test
         run: |
           set -x
-          brew doctor
           brew install --build-from-source "$(pwd)/Formula/igir.rb"
+          find / -name igir
           brew doctor
           igir --help
       
