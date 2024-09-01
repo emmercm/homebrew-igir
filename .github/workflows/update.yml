@@ -21,7 +21,6 @@ jobs:
       # Update the formula and commit to the default branch
       - id: update-and-commit
         run: |
-          set -x
           REPO_JSON=$(gh api "repos/emmercm/igir")
           REPO_CLONE_URL=$(echo "${REPO_JSON}" | jq --raw-output '.clone_url')
           REPO_DEFAULT_BRANCH=$(echo "${REPO_JSON}" | jq --raw-output '.default_branch')
@@ -60,7 +59,9 @@ jobs:
       - if: ${{ steps.update-and-commit.outputs.PACKAGE_VERSION }}
         id: test
         run: |
+          set -x
           brew install --build-from-source "$(pwd)/Formula/igir.rb"
+          brew doctor
           igir --help
       
       # Create the pull request, and mark it as auto-merge
