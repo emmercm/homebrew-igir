@@ -21,7 +21,10 @@ jobs:
       # Update the formula and commit to the default branch
       - id: update-and-commit
         run: |
-          set -x
+          REPO_JSON=$(curl -L --fail-with-body --silent "https://api.github.com/repos/emmercm/igir")
+          REPO_CLONE_URL=$(echo "${REPO_JSON}" | jq --raw-output '.clone_url')
+          REPO_DEFAULT_BRANCH=$(echo "${REPO_JSON}" | jq --raw-output '.default_branch')
+
           PACKAGE_JSON=$(curl -L --fail-with-body --silent "https://registry.npmjs.org/igir/latest")
           PACKAGE_VERSION=$(echo "${PACKAGE_JSON}" | jq --raw-output '.version')
           PACKAGE_DESCRIPTION=$(echo "${PACKAGE_JSON}" | jq --raw-output '.description' | sed 's/[^ -~]//g' | sed 's/^[ ]*//' | head -c 80)
@@ -34,7 +37,8 @@ jobs:
           sed -i '' "s@homepage \".*\"@homepage \"${PACKAGE_HOMEPAGE}\"@" Formula/igir.rb
           sed -i '' "s@url \".*\"@url \"${PACKAGE_TARBALL}\"@" Formula/igir.rb
           sed -i '' "s/sha256 \".*\"/sha256 \"${PACKAGE_TARBALL_SHA256}\"/" Formula/igir.rb
-          sed -i '' "s/license \".*\"/license \"${PACKAGE_LICENSE}\"/" Formula/igir.rb
+          sed -i '' "s/license \".*\"/license \"${PACKAGE_LICENSE}\"/" Formula/igir.rb"
+          sed -i '' "s@head \".*\".*@head \"${REPO_CLONE_URL}\", branch: \"${REPO_DEFAULT_BRANCH}\"@" Formula/igir.rb
           brew style --fix Formula/igir.rb
           cat Formula/igir.rb
           git add --all
