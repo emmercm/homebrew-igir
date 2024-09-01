@@ -1,6 +1,6 @@
 # homebrew-igir
 
-🍺 Homebrew tap for igir.
+🍺 Homebrew tap for [igir](https://igir.io/).
 
 ---
 
