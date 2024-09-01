@@ -15,12 +15,27 @@ jobs:
     runs-on: macos-latest
     steps:
       - uses: actions/checkout@v4
-      - run: pip install homebrew-npm-noob
 
       # Update the formula and commit to the default branch
       - id: update-and-commit
         run: |
-          noob igir > Formula/igir.rb
+          PACKAGE_JSON=$(curl -L --fail-with-body --silent "https://registry.npmjs.org/igir/latest")
+
+          PACKAGE_DESCRIPTION=$(echo "${PACKAGE_JSON}" | jq --raw-output '.description' | sed 's/[^\x00-\x7F]//g' | head -c 80)
+          sed -i "s/desc \".*\"/desc \"${PACKAGE_DESCRIPTION}\"/" Formula/igir.rb
+
+          PACKAGE_HOMEPAGE=$(echo "${PACKAGE_JSON}" | jq --raw-output '.homepage')
+          sed -i "s/homepage \".*\"/homepage \"${PACKAGE_HOMEPAGE}\"/" Formula/igir.rb
+
+          PACKAGE_TARBALL=$(echo "${PACKAGE_JSON}" | jq --raw-output '.dist.tarball')
+          sed -i "s/url \".*\"/url \"${PACKAGE_TARBALL}\"/" Formula/igir.rb
+
+          TARBALL_SHA256=$(curl -L --fail-with-body --silent --output - "${PACKAGE_TARBALL}" | sha256sum)
+          sed -i "s/sha256 \".*\"/sha256 \"${TARBALL_SHA256}\"/" Formula/igir.rb
+
+          PACKAGE_LICENSE=$(echo "${PACKAGE_JSON}" | jq --raw-output '.license')
+          sed -i "s/license \".*\"/license \"${PACKAGE_LICENSE}\"/" Formula/igir.rb
+
           brew style --fix Formula/igir.rb
           git add --all
 
