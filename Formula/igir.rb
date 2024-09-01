@@ -6,6 +6,7 @@ class Igir < Formula
   url "https://registry.npmjs.org/igir/-/igir-2.11.0.tgz"
   sha256 "90af9d96c169b02b1fd1992c4655e81f8238d46f27d79bcb8f353eba2bfd2741"
   license "GPL-3.0-or-later"
+  head "https://github.com/emmercm/igir.git", branch: "main"
 
   livecheck do
     url :stable
