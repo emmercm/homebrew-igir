@@ -61,8 +61,7 @@ jobs:
         run: |
           set -x
           brew update
-          brew uninstall igir || true
-          brew install --build-from-source "$(pwd)/Formula/igir.rb"
+          brew reinstall --build-from-source "$(pwd)/Formula/igir.rb"
           brew linkage igir
           find / -name igir 2> /dev/null
           brew doctor
