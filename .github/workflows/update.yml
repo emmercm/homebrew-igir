@@ -27,7 +27,7 @@ jobs:
           PACKAGE_DESCRIPTION=$(echo "${PACKAGE_JSON}" | jq --raw-output '.description' | sed 's/[^ -~]//g' | sed 's/^[ ]*//' | head -c 80)
           PACKAGE_HOMEPAGE=$(echo "${PACKAGE_JSON}" | jq --raw-output '.homepage')
           PACKAGE_TARBALL=$(echo "${PACKAGE_JSON}" | jq --raw-output '.dist.tarball')
-          PACKAGE_TARBALL_SHA256=$(curl -L --fail-with-body --silent --output - "${PACKAGE_TARBALL}" | sha256sum | awk '{print $1}')
+          PACKAGE_TARBALL_SHA256=$(curl -L --fail-with-body --silent --output - "${PACKAGE_TARBALL}" | shasum -a 256 | awk '{print $1}')
           PACKAGE_LICENSE=$(echo "${PACKAGE_JSON}" | jq --raw-output '.license')
 
           sed -i '' "s/desc \".*\"/desc \"${PACKAGE_DESCRIPTION}\"/" Formula/igir.rb
