@@ -13,6 +13,7 @@ class Igir < Formula
   end
 
   depends_on "node"
+  depends_on "sdl2"
 
   def install
     system "npm", "install", *Language::Node.std_npm_install_args(libexec)
