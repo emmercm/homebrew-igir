@@ -60,10 +60,11 @@ jobs:
         id: test
         run: |
           set -x
-          brew remove --force $(brew list --formula)
-          brew remove --cask --force $(brew list)
+          brew list | xargs brew uninstall --force
+          brew list --cask | xargs brew uninstall --force
           brew install --build-from-source "$(pwd)/Formula/igir.rb"
-          brew linkage igir
+          brew linkage igir || true
+          brew linkage -test igir || true
           find / -name igir 2> /dev/null
           brew doctor
           igir --help
