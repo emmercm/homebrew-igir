@@ -61,7 +61,8 @@ jobs:
         run: |
           set -x
           brew install --build-from-source "$(pwd)/Formula/igir.rb"
-          find / -name igir
+          brew linkage
+          find / -name igir 2> /dev/null
           brew doctor
           igir --help
       
