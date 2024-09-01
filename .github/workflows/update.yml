@@ -39,7 +39,6 @@ jobs:
           sed -i '' "s@url \".*\"@url \"${PACKAGE_TARBALL}\"@" Formula/igir.rb
           sed -i '' "s/sha256 \".*\"/sha256 \"${PACKAGE_TARBALL_SHA256}\"/" Formula/igir.rb
           sed -i '' "s/license \".*\"/license \"${PACKAGE_LICENSE}\"/" Formula/igir.rb"
-          #sed -i '' "s@head \".*\".*@head \"${REPO_CLONE_URL}\", branch: \"${REPO_DEFAULT_BRANCH}\"@" Formula/igir.rb
           brew style --fix Formula/igir.rb
           cat Formula/igir.rb
           git add --all
