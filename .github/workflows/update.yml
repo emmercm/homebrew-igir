@@ -51,7 +51,7 @@ jobs:
           echo "USER_NAME=${USER_NAME}" >> "${GITHUB_OUTPUT}"
           git config --global user.name "${USER_NAME}"
 
-          git commit -m "v${PACKAGE_VERSION}" || exit 0
+          #git commit -m "v${PACKAGE_VERSION}" || exit 0
           echo "PACKAGE_VERSION=${PACKAGE_VERSION}" >> "${GITHUB_OUTPUT}"
         env:
           GH_TOKEN: ${{ github.token }}
@@ -68,6 +68,7 @@ jobs:
           find / -name igir 2> /dev/null
           brew doctor
           igir --help
+          exit 1
       
       # Create the pull request, and mark it as auto-merge
       # - if: ${{ steps.update-and-commit.outputs.PACKAGE_VERSION }}
