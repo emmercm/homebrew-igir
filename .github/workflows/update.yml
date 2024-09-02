@@ -9,8 +9,6 @@ on:
     # Every hour
     - cron: '0 * * * *'
   workflow_dispatch:
-  # DEBUG
-  push:
 
 jobs:
   update:
@@ -64,23 +62,23 @@ jobs:
           igir --help
       
       # Create the pull request, and mark it as auto-merge
-      # - if: ${{ steps.update-and-commit.outputs.PACKAGE_VERSION }}
-      #   id: create-pull-request
-      #   uses: peter-evans/create-pull-request@v6
-      #   with:
-      #     token: ${{ secrets.PERSONAL_ACCESS_TOKEN }}
-      #     author: ${{ steps.update-and-commit.outputs.USER_NAME }} <${{ steps.update-and-commit.outputs.USER_EMAIL }}>
-      #     branch: ${{ github.actor }}/${{ steps.update-and-commit.outputs.PACKAGE_VERSION }}
-      #     delete-branch: true
-      #     title: v${{ steps.update-and-commit.outputs.PACKAGE_VERSION }}
-      # - if: ${{ steps.create-pull-request.outputs.pull-request-number }}
-      #   run: |
-      #     {
-      #       echo "# v${{ steps.update-and-commit.outputs.PACKAGE_VERSION }}"
-      #       echo ""
-      #       echo "${{ steps.create-pull-request.outputs.pull-request-url }}"
-      #     } >> "${GITHUB_STEP_SUMMARY}"
-      # - if: ${{ steps.create-pull-request.outputs.pull-request-number }}
-      #   run: gh pr merge "${{ steps.create-pull-request.outputs.pull-request-number }}" --squash --auto
-      #   env:
-      #     GH_TOKEN: ${{ secrets.PERSONAL_ACCESS_TOKEN }}
+      - if: ${{ steps.update-and-commit.outputs.PACKAGE_VERSION }}
+        id: create-pull-request
+        uses: peter-evans/create-pull-request@v6
+        with:
+          token: ${{ secrets.PERSONAL_ACCESS_TOKEN }}
+          author: ${{ steps.update-and-commit.outputs.USER_NAME }} <${{ steps.update-and-commit.outputs.USER_EMAIL }}>
+          branch: ${{ github.actor }}/${{ steps.update-and-commit.outputs.PACKAGE_VERSION }}
+          delete-branch: true
+          title: v${{ steps.update-and-commit.outputs.PACKAGE_VERSION }}
+      - if: ${{ steps.create-pull-request.outputs.pull-request-number }}
+        run: |
+          {
+            echo "# v${{ steps.update-and-commit.outputs.PACKAGE_VERSION }}"
+            echo ""
+            echo "${{ steps.create-pull-request.outputs.pull-request-url }}"
+          } >> "${GITHUB_STEP_SUMMARY}"
+      - if: ${{ steps.create-pull-request.outputs.pull-request-number }}
+        run: gh pr merge "${{ steps.create-pull-request.outputs.pull-request-number }}" --squash --auto
+        env:
+          GH_TOKEN: ${{ secrets.PERSONAL_ACCESS_TOKEN }}
