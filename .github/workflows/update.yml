@@ -62,7 +62,7 @@ jobs:
           set -x
           #brew list | xargs brew uninstall --force
           #brew list --cask | xargs brew uninstall --force
-          brew install --verbose --debug --build-from-source "$(pwd)/Formula/igir.rb"
+          brew install --debug --verbose --formula --build-from-source "$(pwd)/Formula/igir.rb"
           brew linkage igir || true
           brew linkage --test igir || true
           find / -name igir 2> /dev/null
