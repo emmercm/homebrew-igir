@@ -60,15 +60,8 @@ jobs:
       - if: ${{ steps.update-and-commit.outputs.PACKAGE_VERSION }}
         id: test
         run: |
-          set -x
-          export HOMEBREW_NO_INSTALLED_DEPENDENTS_CHECK=1
-          brew install --debug --verbose --formula --build-from-source "$(pwd)/Formula/igir.rb"
-          #brew linkage igir || true
-          #brew linkage --test igir || true
-          #find / -name igir 2> /dev/null
-          #brew doctor
+          HOMEBREW_NO_INSTALLED_DEPENDENTS_CHECK=1 brew install --debug --verbose --formula --build-from-source "$(pwd)/Formula/igir.rb"
           igir --help
-          exit 1
       
       # Create the pull request, and mark it as auto-merge
       # - if: ${{ steps.update-and-commit.outputs.PACKAGE_VERSION }}
