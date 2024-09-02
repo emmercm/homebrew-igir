@@ -33,13 +33,13 @@ jobs:
           PACKAGE_TARBALL_SHA256=$(curl -L --fail-with-body --silent --output - "${PACKAGE_TARBALL}" | shasum -a 256 | awk '{print $1}')
           PACKAGE_LICENSE=$(echo "${PACKAGE_JSON}" | jq --raw-output '.license')
 
-          #sed -i '' "s/desc \".*\"/desc \"${PACKAGE_DESCRIPTION}\"/" Formula/igir.rb
-          #sed -i '' "s@homepage \".*\"@homepage \"${PACKAGE_HOMEPAGE}\"@" Formula/igir.rb
-          #sed -i '' "s@url \".*\"@url \"${PACKAGE_TARBALL}\"@" Formula/igir.rb
-          #sed -i '' "s/sha256 \".*\"/sha256 \"${PACKAGE_TARBALL_SHA256}\"/" Formula/igir.rb
-          #sed -i '' "s/license \".*\"/license \"${PACKAGE_LICENSE}\"/" Formula/igir.rb
-          #sed -i '' "s@head \".*\".*@head \"${REPO_CLONE_URL}\", branch: \"${REPO_DEFAULT_BRANCH}\"@" Formula/igir.rb
-          #brew style --fix Formula/igir.rb
+          sed -i '' "s/desc \".*\"/desc \"${PACKAGE_DESCRIPTION}\"/" Formula/igir.rb
+          sed -i '' "s@homepage \".*\"@homepage \"${PACKAGE_HOMEPAGE}\"@" Formula/igir.rb
+          sed -i '' "s@url \".*\"@url \"${PACKAGE_TARBALL}\"@" Formula/igir.rb
+          sed -i '' "s/sha256 \".*\"/sha256 \"${PACKAGE_TARBALL_SHA256}\"/" Formula/igir.rb
+          sed -i '' "s/license \".*\"/license \"${PACKAGE_LICENSE}\"/" Formula/igir.rb
+          sed -i '' "s@head \".*\".*@head \"${REPO_CLONE_URL}\", branch: \"${REPO_DEFAULT_BRANCH}\"@" Formula/igir.rb
+          brew style --fix Formula/igir.rb
           cat Formula/igir.rb
           git add --all
 
@@ -51,7 +51,7 @@ jobs:
           echo "USER_NAME=${USER_NAME}" >> "${GITHUB_OUTPUT}"
           git config --global user.name "${USER_NAME}"
 
-          #git commit -m "v${PACKAGE_VERSION}" || exit 0
+          git commit -m "v${PACKAGE_VERSION}" || exit 0
           echo "PACKAGE_VERSION=${PACKAGE_VERSION}" >> "${GITHUB_OUTPUT}"
         env:
           GH_TOKEN: ${{ github.token }}
@@ -60,9 +60,9 @@ jobs:
         id: test
         run: |
           set -x
-          brew list | xargs brew uninstall --force
-          brew list --cask | xargs brew uninstall --force
-          brew install --build-from-source "$(pwd)/Formula/igir.rb"
+          #brew list | xargs brew uninstall --force
+          #brew list --cask | xargs brew uninstall --force
+          brew install --verbose --debug --build-from-source "$(pwd)/Formula/igir.rb"
           brew linkage igir || true
           brew linkage --test igir || true
           find / -name igir 2> /dev/null
