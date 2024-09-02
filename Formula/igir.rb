@@ -1,10 +1,10 @@
 require "language/node"
 
 class Igir < Formula
-  desc "🕹 A video game ROM collection manager to help filter, sort, patch, archive, and report on collections on any OS"
+  desc "Zero-setup ROM collection manager that sorts, filters, extracts or archives, p"
   homepage "https://igir.io/"
-  url "https://registry.npmjs.org/igir/-/igir-2.11.0.tgz"
-  sha256 "90af9d96c169b02b1fd1992c4655e81f8238d46f27d79bcb8f353eba2bfd2741"
+  url "https://registry.npmjs.org/igir/-/igir-3.0.0.tgz"
+  sha256 "0c5c8f87176695bfccaf95e211482c2e86f9f9d340d2007963f3b53d99abc141"
   license "GPL-3.0-or-later"
   head "https://github.com/emmercm/igir.git", branch: "main"
 
@@ -16,7 +16,7 @@ class Igir < Formula
   depends_on "sdl2"
 
   def install
-    system "npm", "install", *Language::Node.std_npm_install_args(libexec)
+    system "npm", "install", *std_npm_args
     bin.install_symlink Dir["#{libexec}/bin/*"]
   end
 
