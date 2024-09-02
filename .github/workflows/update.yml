@@ -21,6 +21,7 @@ jobs:
       # Update the formula and commit to the default branch
       - id: update-and-commit
         run: |
+          set -x
           REPO_JSON=$(gh api "repos/emmercm/igir")
           REPO_CLONE_URL=$(echo "${REPO_JSON}" | jq --raw-output '.clone_url')
           REPO_DEFAULT_BRANCH=$(echo "${REPO_JSON}" | jq --raw-output '.default_branch')
@@ -60,13 +61,12 @@ jobs:
         id: test
         run: |
           set -x
-          #brew list | xargs brew uninstall --force
-          #brew list --cask | xargs brew uninstall --force
+          export HOMEBREW_NO_INSTALLED_DEPENDENTS_CHECK=1
           brew install --debug --verbose --formula --build-from-source "$(pwd)/Formula/igir.rb"
-          brew linkage igir || true
-          brew linkage --test igir || true
-          find / -name igir 2> /dev/null
-          brew doctor
+          #brew linkage igir || true
+          #brew linkage --test igir || true
+          #find / -name igir 2> /dev/null
+          #brew doctor
           igir --help
           exit 1
       
