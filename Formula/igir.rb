@@ -12,7 +12,7 @@ class Igir < Formula
     url :stable
   end
 
-  depends_on "node"
+  depends_on "node@20"
   depends_on "sdl2"
 
   def install
