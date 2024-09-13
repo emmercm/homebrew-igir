@@ -13,7 +13,12 @@ class Igir < Formula
   end
 
   depends_on "node@20"
+  # chdman-js
   depends_on "sdl2"
+  # maxcso-js
+  depends_on "lz4"
+  depends_on "libuv"
+  depends_on "libdeflate"
 
   def install
     system "npm", "install", *std_npm_args
