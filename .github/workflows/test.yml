@@ -14,7 +14,7 @@ jobs:
     steps:
       - uses: actions/checkout@v4
       - run: |
-          brew install --debug --verbose --formula --build-from-source "$(pwd)/Formula/igir.rb"
+          HOMEBREW_NO_INSTALLED_DEPENDENTS_CHECK=1 brew install --debug --verbose --formula --build-from-source "$(pwd)/Formula/igir.rb"
           brew linkage --test igir || brew linkage
           igir --help
   
