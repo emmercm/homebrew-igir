@@ -1,0 +1,30 @@
+name: Test Formula
+
+on:
+  pull_request:
+    types:
+      # - edited  # PR's base branch was changed
+      - opened
+      - reopened
+      - synchronize  # PR's branch was edited (i.e. new commits)
+
+jobs:
+  brew-install:
+    runs-on: macos-latest
+    steps:
+      - uses: actions/checkout@v4
+      - run: |
+          brew install --debug --verbose --formula --build-from-source "$(pwd)/Formula/igir.rb"
+          igir --help
+  
+  # !!! This check should be required by GitHub !!!
+  test-status-check:
+    if: always()
+    needs:
+      - brew-install
+    runs-on: ubuntu-latest
+    steps:
+      - uses: re-actors/alls-green@release/v1
+        with:
+          allowed-skips: node-lint, node-unit, node-e2e, node-build, node-package
+          jobs: ${{ toJSON(needs) }}
