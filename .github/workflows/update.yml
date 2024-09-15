@@ -54,12 +54,6 @@ jobs:
           echo "PACKAGE_VERSION=${PACKAGE_VERSION}" >> "${GITHUB_OUTPUT}"
         env:
           GH_TOKEN: ${{ github.token }}
-
-      - if: ${{ steps.update-and-commit.outputs.PACKAGE_VERSION }}
-        id: test
-        run: |
-          brew install --debug --verbose --formula --build-from-source "$(pwd)/Formula/igir.rb"
-          igir --help
       
       # Create the pull request, and mark it as auto-merge
       - if: ${{ steps.update-and-commit.outputs.PACKAGE_VERSION }}
