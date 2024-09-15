@@ -1,5 +1,3 @@
-require "language/node"
-
 class Igir < Formula
   desc "Zero-setup ROM collection manager that sorts, filters, extracts or archives, p"
   homepage "https://igir.io/"
