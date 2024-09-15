@@ -54,7 +54,7 @@ jobs:
           echo "PACKAGE_VERSION=${PACKAGE_VERSION}" >> "${GITHUB_OUTPUT}"
         env:
           GH_TOKEN: ${{ github.token }}
-      
+
       - if: ${{ steps.update-and-commit.outputs.PACKAGE_VERSION }}
         id: test
         run: |
