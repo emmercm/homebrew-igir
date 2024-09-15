@@ -14,8 +14,8 @@ jobs:
     steps:
       - uses: actions/checkout@v4
       - run: |
-          brew upgrade
           brew install --debug --verbose --formula --build-from-source "$(pwd)/Formula/igir.rb"
+          brew linkage --test igir
           igir --help
   
   # !!! This check should be required by GitHub !!!
