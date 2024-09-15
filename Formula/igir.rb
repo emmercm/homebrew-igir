@@ -15,7 +15,7 @@ class Igir < Formula
   depends_on "libdeflate" # maxcso-js
   depends_on "libuv" # maxcso-js
   depends_on "lz4" # maxcso-js
-  depends_on "node"
+  depends_on "node@20"
   depends_on "sdl2" # chdman-js
 
   def install
