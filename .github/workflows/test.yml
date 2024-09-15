@@ -15,7 +15,7 @@ jobs:
       - uses: actions/checkout@v4
       - run: |
           HOMEBREW_NO_INSTALLED_DEPENDENTS_CHECK=1 brew install --debug --verbose --formula --build-from-source "$(pwd)/Formula/igir.rb"
-          brew linkage --test igir || brew linkage
+          brew linkage --test igir
           igir --help
   
   # !!! This check should be required by GitHub !!!
