@@ -18,7 +18,7 @@ jobs:
     steps:
       - uses: actions/checkout@v4
       - run: |
-          brew install --debug --verbose --formula --build-from-source --HEAD "$(pwd)/Formula/igir.rb"
+          brew install --debug --verbose --formula --build-from-source "$(pwd)/Formula/igir.rb"
           igir --help
   
   # !!! This check should be required by GitHub !!!
