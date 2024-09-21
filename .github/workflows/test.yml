@@ -8,13 +8,17 @@ on:
       - reopened
       - synchronize  # PR's branch was edited (i.e. new commits)
 
+concurrency:
+  group: ${{ github.workflow }}-${{ github.ref }}
+  cancel-in-progress: true
+
 jobs:
   brew-install:
     runs-on: macos-latest
     steps:
       - uses: actions/checkout@v4
       - run: |
-          HOMEBREW_NO_INSTALLED_DEPENDENTS_CHECK=1 brew install --debug --verbose --formula --build-from-source "$(pwd)/Formula/igir.rb"
+          brew install --debug --verbose --formula --build-from-source "$(pwd)/Formula/igir.rb"
           igir --help
   
   # !!! This check should be required by GitHub !!!
