@@ -10,11 +10,7 @@ class Igir < Formula
     url :stable
   end
 
-  depends_on "libdeflate" # maxcso-js
-  depends_on "libuv" # maxcso-js
-  depends_on "lz4" # maxcso-js
   depends_on "node"
-  depends_on "sdl2" # chdman-js
 
   def install
     system "npm", "install", *std_npm_args
