@@ -29,7 +29,8 @@ jobs:
         with:
           ref: ${{ env.ref }}
       - run: |
-          brew install --debug --verbose --formula --build-from-source "$(pwd)/Formula/igir.rb"
+          brew tap test/igir "$(pwd)"
+          brew install --debug --verbose --formula --build-from-source "test/igir/igir"
           igir --help
   
   # !!! This check should be required by GitHub !!!
