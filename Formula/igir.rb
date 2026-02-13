@@ -12,9 +12,6 @@ class Igir < Formula
 
   depends_on "node"
 
-  # Required for 'node-gyp build' / 'node-gyp-build'
-  depends_on "python@3" => :build
-
   def install
     system "npm", "install", *std_npm_args
     bin.install_symlink Dir["#{libexec}/bin/*"]
