@@ -7,18 +7,30 @@ on:
       - opened
       - reopened
       - synchronize  # PR's branch was edited (i.e. new commits)
+  workflow_dispatch:
+    inputs:
+      ref:
+        description: 'Git ref (refs/heads/<branch>, refs/tags/<tag>, etc.) or SHA'
+        required: true
+        type: string
 
 concurrency:
   group: ${{ github.workflow }}-${{ github.ref }}
   cancel-in-progress: true
+
+env:
+  ref: ${{ inputs.ref || github.sha || github.ref }}
 
 jobs:
   brew-install:
     runs-on: macos-latest
     steps:
       - uses: actions/checkout@v4
+        with:
+          ref: ${{ env.ref }}
       - run: |
-          brew install --debug --verbose --formula --build-from-source "$(pwd)/Formula/igir.rb"
+          brew tap test/igir "$(pwd)"
+          brew install --debug --verbose --formula --build-from-source "test/igir/igir"
           igir --help
   
   # !!! This check should be required by GitHub !!!
