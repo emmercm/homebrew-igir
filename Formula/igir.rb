@@ -14,7 +14,7 @@ class Igir < Formula
   depends_on "python@3" => :build
 
   def install
-    system "npm", "install", "--foreground-scripts", *std_npm_args, "--omit", "dev"
+    system "npm", "install", "--foreground-scripts", *std_npm_args(ignore_scripts: false), "--omit", "dev"
     bin.install_symlink Dir["#{libexec}/bin/*"]
   end
 
