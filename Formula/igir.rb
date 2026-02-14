@@ -11,6 +11,7 @@ class Igir < Formula
   end
 
   depends_on "node"
+  depends_on "python@3" => :build
 
   def install
     system "npm", "install", *std_npm_args
