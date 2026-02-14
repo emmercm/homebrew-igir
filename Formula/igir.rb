@@ -10,8 +10,8 @@ class Igir < Formula
     url :stable
   end
 
-  depends_on "node"
   depends_on "python@3" => :build
+  depends_on "node"
 
   def install
     system "npm", "install", "--omit", "dev", *std_npm_args(ignore_scripts: false)
