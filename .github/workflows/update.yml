@@ -11,10 +11,25 @@ on:
   workflow_dispatch:
 
 jobs:
-  update:
+  # Homebrew sets `npm install --min-release-age` and doesn't offer an override
+  # This will affect dependencies of igir that are updated immediately, such as chdman/maxcso/dolphin-tool
+  min-release-age:
     runs-on: macos-latest
+    timeout-minutes: 5
     steps:
-      - uses: actions/checkout@v4
+      - run: |
+          PACKAGE_JSON=$(curl -L --fail-with-body --silent "https://registry.npmjs.org/igir/latest")
+          PACKAGE_TARBALL=$(echo "${PACKAGE_JSON}" | jq --raw-output '.dist.tarball')
+
+          npm install --omit-dev --loglevel=silly --build-from-source --min-release-age=1 "${PACKAGE_TARBALL}"
+
+  update:
+    needs:
+      - min-release-age
+    runs-on: macos-latest
+    timeout-minutes: 10
+    steps:
+      - uses: actions/checkout@v6
 
       # Update the formula and commit to the default branch
       - id: update-and-commit
