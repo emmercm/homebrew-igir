@@ -73,7 +73,7 @@ jobs:
       # Create the pull request, and mark it as auto-merge
       - if: ${{ steps.update-and-commit.outputs.PACKAGE_VERSION }}
         id: create-pull-request
-        uses: peter-evans/create-pull-request@v6
+        uses: peter-evans/create-pull-request@v8
         with:
           token: ${{ secrets.PERSONAL_ACCESS_TOKEN }}
           author: ${{ steps.update-and-commit.outputs.USER_NAME }} <${{ steps.update-and-commit.outputs.USER_EMAIL }}>
