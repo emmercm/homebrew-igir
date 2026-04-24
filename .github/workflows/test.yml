@@ -23,12 +23,21 @@ env:
 
 jobs:
   brew-install:
-    runs-on: macos-latest
+    runs-on: ${{ matrix.os }}
     timeout-minutes: 10
+    strategy:
+      fail-fast: false
+      matrix:
+        include:
+          - os: ubuntu-latest
+          - os: ubuntu-24.04-arm
+          - os: macos-15-intel
+          - os: macos-latest
     steps:
       - uses: actions/checkout@v6
         with:
           ref: ${{ env.ref }}
+      - uses: Homebrew/actions/setup-homebrew@master
       - run: |
           brew tap test/igir "$(pwd)"
           brew install --debug --verbose --formula --build-from-source "test/igir/igir"
