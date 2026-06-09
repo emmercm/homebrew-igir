@@ -39,9 +39,6 @@ jobs:
           ref: ${{ env.ref }}
       - uses: Homebrew/actions/setup-homebrew@master
 
-      - if: runner.os == 'macOS'
-        run: |
-          brew install --build-from-source bubblewrap
       - if: runner.os == 'Linux'
         run: |
           sudo apt-get update
@@ -52,7 +49,12 @@ jobs:
 
       - run: |
           brew tap test/igir "$(pwd)"
-          brew install --debug --verbose --formula --build-from-source "test/igir/igir"
+          if ! brew install --debug --verbose --formula --build-from-source "test/igir/igir"; then
+            echo "::group::Homebrew build logs"
+            cat ~/.cache/Homebrew/Logs/igir/* "$HOME/Library/Logs/Homebrew/igir/"* 2>/dev/null || true
+            echo "::endgroup::"
+            exit 1
+          fi
           igir --help
   
   # !!! This check should be required by GitHub !!!
