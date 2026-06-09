@@ -7,8 +7,8 @@
 To install:
 
 ```shell
-brew tap emmercm/igir
-brew install igir
+brew trust emmercm/igir
+brew install emmercm/igir/igir
 ```
 
 To update:
@@ -22,4 +22,5 @@ To uninstall:
 ```shell
 brew uninstall igir
 brew untap emmercm/igir
+brew untrust emmercm/igir
 ```
