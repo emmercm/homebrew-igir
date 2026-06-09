@@ -39,6 +39,8 @@ jobs:
           ref: ${{ env.ref }}
       - uses: Homebrew/actions/setup-homebrew@master
       - run: |
+          brew install bubblewrap
+
           brew tap test/igir "$(pwd)"
           brew install --debug --verbose --formula --build-from-source "test/igir/igir"
           igir --help
