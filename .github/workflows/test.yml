@@ -38,8 +38,18 @@ jobs:
         with:
           ref: ${{ env.ref }}
       - uses: Homebrew/actions/setup-homebrew@master
+
+      - if: runner.os == 'Linux'
+        run: |
+          sudo apt-get update
+          sudo apt-get install --yes bubblewrap
+          sudo sysctl -w kernel.unprivileged_userns_clone=1
+          sudo sysctl -w user.max_user_namespaces=28633
+          sudo sysctl -w kernel.apparmor_restrict_unprivileged_userns=0 || true
+
       - run: |
           brew tap test/igir "$(pwd)"
+          brew trust test/igir
           brew install --debug --verbose --formula --build-from-source "test/igir/igir"
           igir --help
   
