@@ -49,12 +49,8 @@ jobs:
 
       - run: |
           brew tap test/igir "$(pwd)"
-          if ! brew install --debug --verbose --formula --build-from-source "test/igir/igir"; then
-            echo "::group::Homebrew build logs"
-            cat ~/.cache/Homebrew/Logs/igir/* "$HOME/Library/Logs/Homebrew/igir/"* 2>/dev/null || true
-            echo "::endgroup::"
-            exit 1
-          fi
+          brew trust test/igir
+          brew install --debug --verbose --formula --build-from-source "test/igir/igir"
           igir --help
   
   # !!! This check should be required by GitHub !!!
