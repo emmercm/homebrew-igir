@@ -31,7 +31,6 @@ jobs:
         include:
           - os: ubuntu-latest
           - os: ubuntu-24.04-arm
-          - os: macos-15-intel
           - os: macos-latest
     steps:
       - uses: actions/checkout@v6
@@ -48,9 +47,7 @@ jobs:
           sudo sysctl -w kernel.apparmor_restrict_unprivileged_userns=0 || true
 
       - run: |
-          brew tap test/igir "$(pwd)"
-          brew trust test/igir
-          brew install --debug --verbose --formula --build-from-source "test/igir/igir"
+          brew install --debug --verbose --formula --build-from-source "emmercm/igir/igir"
           igir --help
   
   # !!! This check should be required by GitHub !!!
