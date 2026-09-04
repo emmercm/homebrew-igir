@@ -24,21 +24,14 @@ env:
 jobs:
   brew-install:
     runs-on: ${{ matrix.os }}
-    timeout-minutes: ${{ matrix.timeout }}
+    timeout-minutes: 10
     strategy:
       fail-fast: false
       matrix:
         include:
           - os: ubuntu-latest
-            timeout: 10
           - os: ubuntu-24.04-arm
-            timeout: 10
-          # Homebrew no longer publishes x86_64 macOS bottles for node and its
-          # dependencies (openssl@3, simdjson), so they're all built from source
-          - os: macos-15-intel
-            timeout: 120
           - os: macos-latest
-            timeout: 10
     steps:
       - uses: actions/checkout@v6
         with:
