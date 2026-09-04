@@ -1,8 +1,8 @@
 class Igir < Formula
   desc "Zero-setup ROM collection manager that sorts, filters, extracts or archives, p"
   homepage "https://igir.io/"
-  url "https://registry.npmjs.org/igir/-/igir-5.4.0.tgz"
-  sha256 "dea4bf47bd666689f079e9fb4c6a97b28507c685169baa91ca881cc31bbfc826"
+  url "https://registry.npmjs.org/igir/-/igir-5.4.1.tgz"
+  sha256 "eaa969c9ec06711d4a45dbdebb56603b96bf6455ce60f2b1871df70b69f92172"
   license "GPL-3.0-or-later"
   head "https://github.com/emmercm/igir.git", branch: "main"
 
